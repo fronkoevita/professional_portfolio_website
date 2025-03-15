@@ -55,6 +55,10 @@ def home():
 
     return render_template("index.html", form=form)
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     form = ContactForm()
@@ -71,6 +75,4 @@ def contact():
     return render_template("contact.html", form=form)
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
